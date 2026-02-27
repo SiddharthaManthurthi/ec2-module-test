@@ -2,11 +2,14 @@ module "ec2" {
     source = "../terraform-aws-instance"
     #project = "roboshop"
     #environment = "dev"
-    ami_id = "ami-0220d79f3f480ecf5"
-    sg_ids = ["sg-028a0f9feae2f961e"]
+    project = var.project_name
+    environment = var.env
+    ami_id = data.aws_ami.joindevops.id
+    sg_ids = var.sg_ids
     instance_type = "t3.micro"
     tags = {
-        Name = "roboshop-dev-catalogue"
-    }
-    
+        Name = "${var.project_name}-${var.env}-${var.component}"
+        component = var.component
+
+    } 
 }
